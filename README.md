@@ -2,7 +2,7 @@
 
 Este proyecto reúne un ecosistema funcional orientado a la gestión integral de infraestructura IT.
 
-![Diagrama del ecosistema](ecosistema-it.png) Combina **Windows Server**, **Zabbix**, **GLPI** y **WireGuard** para cubrir necesidades de administración de dominios, monitoreo, helpdesk y acceso seguro.
+![Diagrama del ecosistema]([ecosistema-it.png](https://github.com/farnacho/Ecosistema-Windows-Server-Zabbix-GLPI/releases/download/v1.0/ImagenEcosistema.png)) Combina **Windows Server**, **Zabbix**, **GLPI** y **WireGuard** para cubrir necesidades de administración de dominios, monitoreo, helpdesk y acceso seguro.
 
 El objetivo principal es **resolver problemas reales del entorno IT**, al tiempo que sirve como un laboratorio para **experimentar, aprender y validar habilidades técnicas**.
 
