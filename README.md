@@ -7,6 +7,10 @@ Este proyecto reúne un ecosistema funcional orientado a la gestión integral de
 El objetivo principal es **resolver problemas reales del entorno IT**, al tiempo que sirve como un laboratorio para **experimentar, aprender y validar habilidades técnicas**.
 
 ---
+# Todo está hecho en proceso de documentarse, o casi terminado
+
+
+---
 
 ## 🎯 Objetivos del Proyecto
 
