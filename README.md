@@ -76,18 +76,6 @@ El proyecto no tiene coste económico. Requiere tiempo de aprendizaje, despliegu
 
 ---
 
-## 📜 Licencia
-
-La licencia define qué pueden hacer otros usuarios con tu proyecto. Puedes elegir entre:
-
-* **MIT** (muy permisiva)
-* **GPLv3** (software libre, obliga a compartir derivados)
-* **Apache 2.0** (permisiva con protección de patentes)
-
-> Si no especificas ninguna, por defecto nadie puede usar tu proyecto legalmente.
-
----
-
 ## 👤 Autor
 
 **Nacho Abad Rodríguez**
