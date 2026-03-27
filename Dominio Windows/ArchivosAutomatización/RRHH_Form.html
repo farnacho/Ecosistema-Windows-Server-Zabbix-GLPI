@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RRHH — Gestión de Usuarios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:           #0a0c10;
+            --surface:      #111318;
+            --surface2:     #181c24;
+            --border:       rgba(255,255,255,0.07);
+            --border-hover: rgba(255,255,255,0.15);
+            --accent:       #00e5ff;
+            --accent2:      #7c3aed;
+            --text:         #e8eaf0;
+            --muted:        #5a6070;
+            --success:      #00e096;
+            --error:        #ff4d6d;
+            --alta:         #00e5ff;
+            --baja:         #ff4d6d;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* Fondo animado */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 40% at 10% 20%, rgba(0,229,255,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 90% 80%, rgba(124,58,237,0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 620px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text);
+        }
+
+        .header p {
+            color: var(--muted);
+            font-size: 0.875rem;
+            padding-left: 52px;
+        }
+
+        /* Panel */
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Selector de tipo */
+        .type-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .type-option { position: relative; }
+        .type-option input { position: absolute; opacity: 0; }
+
+        .type-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.875rem 0.5rem;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .type-card .icon { font-size: 1.3rem; }
+
+        .type-card:hover {
+            border-color: var(--border-hover);
+            color: var(--text);
+        }
+
+        .type-option.alta input:checked ~ .type-card {
+            background: rgba(0,229,255,0.08);
+            border-color: var(--alta);
+            color: var(--alta);
+            box-shadow: 0 0 20px rgba(0,229,255,0.1);
+        }
+
+        .type-option.baja input:checked ~ .type-card {
+            background: rgba(255,77,109,0.08);
+            border-color: var(--baja);
+            color: var(--baja);
+            box-shadow: 0 0 20px rgba(255,77,109,0.1);
+        }
+
+        /* Separador de sección */
+        .section-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Inputs */
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+            transition: color 0.2s;
+        }
+
+        .form-group:focus-within label { color: var(--text); }
+
+        .form-control {
+            width: 100%;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s ease;
+            appearance: none;
+        }
+
+        .form-control::placeholder { color: var(--muted); }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0,229,255,0.08);
+        }
+
+        select.form-control {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%235a6070'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1rem;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+
+        select.form-control option {
+            background: #1a1d24;
+            color: var(--text);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Secciones condicionales */
+        .conditional { display: none; }
+        .conditional.visible { display: block; }
+
+        /* Info box */
+        .info-box {
+            background: rgba(0,229,255,0.05);
+            border: 1px solid rgba(0,229,255,0.15);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-size: 0.82rem;
+            color: rgba(0,229,255,0.8);
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+
+        .info-box.warning {
+            background: rgba(255,77,109,0.05);
+            border-color: rgba(255,77,109,0.2);
+            color: rgba(255,120,140,0.9);
+        }
+
+        /* Botón */
+        .btn-submit {
+            width: 100%;
+            margin-top: 1.5rem;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, var(--accent), #0099bb);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(0,229,255,0.25);
+        }
+
+        .btn-submit:active { transform: translateY(0); }
+
+        .btn-submit.baja-mode {
+            background: linear-gradient(135deg, var(--baja), #cc1a36);
+            color: #fff;
+        }
+
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Notificación */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 100;
+            min-width: 300px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.success { border-color: var(--success); }
+        .toast.error   { border-color: var(--error); }
+
+        .toast-icon { font-size: 1.2rem; }
+        .toast-text { flex: 1; }
+        .toast-title { font-weight: 600; font-size: 0.875rem; }
+        .toast-sub { color: var(--muted); font-size: 0.8rem; margin-top: 0.1rem; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        .footer span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            margin-right: 0.4rem;
+            vertical-align: middle;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @media (max-width: 480px) {
+            .row { grid-template-columns: 1fr; }
+            .type-selector { grid-template-columns: 1fr; }
+            body { padding: 1rem; }
+            .panel { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="toast" id="toast">
+    <div class="toast-icon" id="toastIcon">✅</div>
+    <div class="toast-text">
+        <div class="toast-title" id="toastTitle">Solicitud enviada</div>
+        <div class="toast-sub"  id="toastSub">Procesando...</div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="header">
+        <div class="header-top">
+            <div class="logo-mark">👤</div>
+            <h1>Gestión de Usuarios</h1>
+        </div>
+        <p>Sistema de solicitudes RRHH — nacho.local</p>
+    </div>
+
+    <div class="panel">
+
+        <!-- Tipo de solicitud -->
+        <div class="type-selector">
+            <label class="type-option alta">
+                <input type="radio" name="tipo" value="ALTA" checked onchange="onTipoChange()">
+                <div class="type-card">
+                    <span class="icon">➕</span>
+                    Alta
+                </div>
+            </label>
+            <label class="type-option baja">
+                <input type="radio" name="tipo" value="BAJA" onchange="onTipoChange()">
+                <div class="type-card">
+                    <span class="icon">➖</span>
+                    Baja
+                </div>
+            </label>
+        </div>
+
+        <form id="rrhhForm" onsubmit="handleSubmit(event)">
+
+            <!-- CAMPOS COMUNES -->
+            <div class="section-label">Datos del empleado</div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="nombre">Nombre *</label>
+                    <input type="text" id="nombre" class="form-control" placeholder="Ej. Laura" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellidos">Apellidos *</label>
+                    <input type="text" id="apellidos" class="form-control" placeholder="Ej. García López" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email corporativo *</label>
+                <input type="email" id="email" class="form-control" placeholder="usuario@nacho.local" required>
+            </div>
+
+            <div class="form-group">
+                <label for="departamento">Departamento *</label>
+                <select id="departamento" class="form-control" required>
+                    <option value="" disabled selected>Selecciona un departamento</option>
+                    <option value="Direccion_Administracion">Dirección y Administración</option>
+                    <option value="Desarrollo">Desarrollo</option>
+                    <option value="Hardware">Hardware</option>
+                    <option value="Comercial_Soporte">Comercial y Soporte</option>
+                </select>
+            </div>
+
+            <!-- SECCIÓN ALTA -->
+            <div class="conditional visible" id="secAlta">
+                <div class="section-label">Datos de incorporación</div>
+                <div class="info-box">
+                    ℹ️ El nombre de usuario se generará automáticamente a partir del nombre y apellido. La contraseña inicial se creará de forma segura.
+                </div>
+                <div class="form-group">
+                    <label for="rol">Rol / Puesto</label>
+                    <input type="text" id="rol" class="form-control" placeholder="Ej. Desarrollador Junior">
+                </div>
+            </div>
+
+            <!-- SECCIÓN BAJA -->
+            <div class="conditional" id="secBaja">
+                <div class="section-label">Datos de baja</div>
+                <div class="info-box warning">
+                    ⚠️ La cuenta será deshabilitada y movida a la OU de Deshabilitados en Active Directory.
+                </div>
+                <div class="form-group">
+                    <label for="username">Nombre de usuario (obligatorio para bajas) *</label>
+                    <input type="text" id="username" class="form-control" placeholder="Ej. lgarcia">
+                </div>
+                <div class="form-group">
+                    <label for="motivo">Motivo de la baja</label>
+                    <select id="motivo" class="form-control">
+                        <option value="">Selecciona un motivo</option>
+                        <option value="Renuncia voluntaria">Renuncia voluntaria</option>
+                        <option value="Despido">Despido</option>
+                        <option value="Fin de contrato">Fin de contrato</option>
+                        <option value="Jubilación">Jubilación</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- NOTAS -->
+            <div class="section-label">Información adicional</div>
+            <div class="form-group">
+                <label for="notas">Notas / Comentarios</label>
+                <textarea id="notas" class="form-control" placeholder="Cualquier información relevante para esta solicitud..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit" id="btnSubmit">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Enviar Solicitud de Alta
+            </button>
+
+        </form>
+    </div>
+
+    <div class="footer">
+        <span></span>Conectado a nacho.local — gestion_usuarios
+    </div>
+
+</div>
+
+<script>
+    // ─── Config ───────────────────────────────────────────────
+    // Cambia esta URL por la ruta real a tu archivo PHP en el servidor
+    const API_URL = 'insertar_solicitud.php';
+
+    // ─── Estado ───────────────────────────────────────────────
+    function getTipo() {
+        return document.querySelector('input[name="tipo"]:checked').value;
+    }
+
+    function onTipoChange() {
+        const tipo = getTipo();
+
+        document.getElementById('secAlta').classList.toggle('visible', tipo === 'ALTA');
+        document.getElementById('secBaja').classList.toggle('visible', tipo === 'BAJA');
+
+        // Requerido dinámico
+        document.getElementById('username').required = (tipo === 'BAJA');
+
+        // Botón
+        const btn = document.getElementById('btnSubmit');
+        btn.className = 'btn-submit';
+        if (tipo === 'BAJA') btn.classList.add('baja-mode');
+
+        const labels = { ALTA: 'Enviar Solicitud de Alta', BAJA: 'Enviar Solicitud de Baja' };
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ${labels[tipo]}`;
+    }
+
+    // ─── Submit ───────────────────────────────────────────────
+    async function handleSubmit(e) {
+        e.preventDefault();
+        const tipo = getTipo();
+        const btn  = document.getElementById('btnSubmit');
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Enviando...';
+
+        const payload = {
+            tipo:         tipo,
+            nombre:       document.getElementById('nombre').value.trim(),
+            apellidos:    document.getElementById('apellidos').value.trim(),
+            email:        document.getElementById('email').value.trim(),
+            departamento: document.getElementById('departamento').value,
+            rol:          document.getElementById('rol').value.trim(),
+            username:     tipo === 'BAJA' ? document.getElementById('username').value.trim() : '',
+            notas:        document.getElementById('notas').value.trim()
+        };
+
+        if (tipo === 'BAJA') {
+            payload.notas = (document.getElementById('motivo').value
+                ? 'Motivo: ' + document.getElementById('motivo').value + '. '
+                : '') + payload.notas;
+        }
+
+        try {
+            const res  = await fetch(API_URL, {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify(payload)
+            });
+            const data = await res.json();
+
+            if (data.ok) {
+                showToast('success', '✅', 'Solicitud registrada', `ID #${data.id} — ${tipo} para ${payload.nombre} ${payload.apellidos}`);
+                document.getElementById('rrhhForm').reset();
+                onTipoChange();
+            } else {
+                showToast('error', '❌', 'Error al guardar', data.error || 'Revisa la conexión con la base de datos');
+            }
+        } catch (err) {
+            showToast('error', '❌', 'Error de conexión', 'No se pudo contactar con el servidor PHP');
+        }
+
+        btn.disabled = false;
+        onTipoChange();
+    }
+
+    // ─── Toast ────────────────────────────────────────────────
+    function showToast(type, icon, title, sub) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastIcon').textContent  = icon;
+        document.getElementById('toastTitle').textContent = title;
+        document.getElementById('toastSub').textContent   = sub;
+        toast.className = `toast ${type} show`;
+        setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+</script>
+
+</body>
+</html>

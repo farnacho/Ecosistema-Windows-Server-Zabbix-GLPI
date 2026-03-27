@@ -1,0 +1,39 @@
+escaner esscaner
+Pitlog2026!
+
+------------
+ PENDIENTES
+------------
+
+
+- Documentar trabajo Ubuntu Server hasta ahora
+
+- Mejorar ecosistema Zabbix + GLPI
+
+- Implementar Windows Server en GLPI
+
+- Configurar alertas Zabbix
+
+- Configurar tickets y aprender a solucionarlos
+
+
+
+------------
+ COMPLETADO
+------------
+
+- Documentar trabajo de Dominio Windows hasta ahora 
+
+- Subir Archivos como BD y Scripts de WDomain a repositorio GitHub
+
+- Aprender a utilizar GitHub de manera simple al menos
+
+- Crear un README.md para subir todo el proyecto a GitHub
+
+- Ubuntu Server con Zabbix + GLPI
+
+- Dominio Windows + Automatización de gestión de usuarios
+
+- Crear Perfil de GitHub
+
+- Reglas IPtables + VPN en Ubuntu Server
