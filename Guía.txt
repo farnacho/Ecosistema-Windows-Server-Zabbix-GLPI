@@ -2,8 +2,7 @@
  PENDIENTES
 ------------
 
-
-- Documentar trabajo Ubuntu Server hasta ahora
+- Terminar el trabajo con el VPN desde un entorno seguro
 
 - Mejorar ecosistema Zabbix + GLPI
 
@@ -18,6 +17,8 @@
 ------------
  COMPLETADO
 ------------
+
+- Documentar trabajo Ubuntu Server hasta ahora
 
 - Documentar trabajo de Dominio Windows hasta ahora 
 
