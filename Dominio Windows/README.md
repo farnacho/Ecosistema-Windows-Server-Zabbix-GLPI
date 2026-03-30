@@ -21,9 +21,6 @@ El proyecto es un sistema integral diseñado para automatizar y gestionar divers
 - **Gestión de Solicitudes**: Usa `insertar_solicitud.php` para procesar solicitudes.
 - **Interacciones con la Base de Datos**: Ejecuta scripts SQL como `ConsultaTablas.sql` para consultar o modificar datos.
 
-
-## 📸 Screenshots
-
 ## 🤝 Contribuciones
 Las contribuciones son bienvenidas. Para contribuir, haz un fork del repositorio, realiza tus cambios y envía un pull request.
 
