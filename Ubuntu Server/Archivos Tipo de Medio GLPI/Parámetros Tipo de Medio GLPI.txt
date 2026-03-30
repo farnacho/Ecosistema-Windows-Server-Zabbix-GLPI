@@ -1,0 +1,17 @@
+alert_message 
+Problema detectado por Zabbix\n\nHost: {HOST.NAME}\nIP: {HOST.IP}\nTrigger: {TRIGGER.NAME}\nSeveridad: {TRIGGER.SEVERITY}\nEstado: {TRIGGER.STATUS}\nFecha: {EVENT.DATE} {EVENT.TIME}\n\nEnlace al evento: {TRIGGER.URL}
+
+alert_subject
+Zabbix: {HOST.NAME} - {TRIGGER.NAME} ({TRIGGER.SEVERITY})
+
+
+glpi_password
+Cliente.1
+
+glpi_url
+http://localhost
+
+
+glpi_user
+zabbix_api
+
