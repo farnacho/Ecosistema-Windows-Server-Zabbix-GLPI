@@ -23,7 +23,7 @@ El núcleo del directorio es el documento `DocumentoExplicación.pdf`, que descr
 
 
 ## 💻 Uso
-- **Desplpiegue de Ubuntu Server**: Sigue las instrucciones del documento PDF para preparar la máquina, actualizar paquetes y configurar servicios base.
+- **Despliegue de Ubuntu Server**: Sigue las instrucciones del documento PDF para preparar la máquina, actualizar paquetes y configurar servicios base.
 - **Instalación de Zabbix**: Implementa el servidor de monitorización, frontend y base de datos según la guía.
 - **Instalación de GLPI**: Configura el sistema ITSM, sus dependencias PHP y el servidor web.
 - **Uso de recursos GLPI**: La carpeta de medios puede importarse desde la interfaz de GLPI para enriquecer su clasificación de activos.
